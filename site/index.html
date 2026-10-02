@@ -86,49 +86,58 @@ article {
 | Size | `1.125rem` | the text is read at a distance |
 | Leading | `1.45` | the lines get longer |</code></pre>
         </div>
-        <div class="pane pigment set" translate="no">
+        <div class="pane pigment set">
           <p class="pane-label">Pigment, typeset</p>
-<pre tabindex="0" role="region" aria-label="Swift file, in colour"><code><span class="k">import</span> SwiftUI
-
-<span class="c">// A named colour in a theme.</span>
+          <h2>Naming a colour</h2>
+          <p>Give every colour a <strong>name</strong> and write its value once. A <code>Pigment</code> keeps the two together, so a view asks for the name and never repeats the number.</p>
+<pre tabindex="0" role="region" aria-label="Swift sample" translate="no"><code><span class="c">// One name, one value.</span>
 <span class="k">struct</span> <span class="t">Pigment</span> {
   <span class="k">let</span> name: <span class="t">String</span>
   <span class="k">let</span> hex: <span class="t">Int</span>
 
-  <span class="k">func</span> <span class="f">color</span>() -&gt; <span class="t">Color</span> {
-    <span class="k">let</span> r = <span class="t">Double</span>(hex &gt;&gt; <span class="n">16</span> &amp; <span class="n">0xFF</span>)
-    <span class="k">let</span> g = <span class="t">Double</span>(hex &gt;&gt; <span class="n">8</span> &amp; <span class="n">0xFF</span>)
-    <span class="k">let</span> b = <span class="t">Double</span>(hex &amp; <span class="n">0xFF</span>)
-    <span class="k">return</span> <span class="t">Color</span>(
-      red: r / <span class="n">255</span>, green: g / <span class="n">255</span>,
-      blue: b / <span class="n">255</span>)
+  <span class="k">func</span> <span class="f">red</span>() -&gt; <span class="t">Double</span> {
+    <span class="t">Double</span>(hex &gt;&gt; <span class="n">16</span> &amp; <span class="n">0xFF</span>) / <span class="n">255</span>
   }
 }
 
 <span class="k">let</span> lead = <span class="t">Pigment</span>(
   name: <span class="s">"Vermilion"</span>, hex: <span class="n">0xD2452D</span>)</code></pre>
+          <blockquote>Write the value once. Every view reads it from there.</blockquote>
+          <div class="table-scroll" tabindex="0" role="region" aria-label="Pigments table"><table>
+            <tr><th>Pigment</th><th>Value</th><th>Colours</th></tr>
+            <tr><td>Vermilion</td><td><code>0xD2452D</code></td><td>keywords</td></tr>
+            <tr><td>Indigo</td><td><code>0x34446E</code></td><td>function names</td></tr>
+            <tr><td>Green earth</td><td><code>0x6E8B5B</code></td><td>strings</td></tr>
+          </table></div>
         </div>
         <div class="pane pigment raw" translate="no">
           <p class="pane-label">Pigment, raw</p>
-<pre tabindex="0" role="region" aria-label="Swift file, plain"><code>import SwiftUI
+<pre><code># Naming a colour
 
-// A named colour in a theme.
+Give every colour a **name** and write its value once. A `Pigment` keeps the two together, so a view asks for the name and never repeats the number.
+
+```swift
+// One name, one value.
 struct Pigment {
   let name: String
   let hex: Int
 
-  func color() -&gt; Color {
-    let r = Double(hex &gt;&gt; 16 &amp; 0xFF)
-    let g = Double(hex &gt;&gt; 8 &amp; 0xFF)
-    let b = Double(hex &amp; 0xFF)
-    return Color(
-      red: r / 255, green: g / 255,
-      blue: b / 255)
+  func red() -&gt; Double {
+    Double(hex &gt;&gt; 16 &amp; 0xFF) / 255
   }
 }
 
 let lead = Pigment(
-  name: "Vermilion", hex: 0xD2452D)</code></pre>
+  name: "Vermilion", hex: 0xD2452D)
+```
+
+&gt; Write the value once. Every view reads it from there.
+
+| Pigment | Value | Colours |
+|---|---|---|
+| Vermilion | `0xD2452D` | keywords |
+| Indigo | `0x34446E` | function names |
+| Green earth | `0x6E8B5B` | strings |</code></pre>
         </div>
       </div>
       <p class="demo-note">An illustration, drawn by this page. Screenshots of the app will replace it at release.</p>

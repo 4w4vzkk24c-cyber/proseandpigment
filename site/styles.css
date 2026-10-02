@@ -421,19 +421,6 @@ code {
   width: calc(100cqw - 2 * var(--pane-pad));
   max-width: none;
 }
-/* A source file keeps the same lines in both views, so its two halves meet as one block:
-   plain to the left of the line, coloured to the right. */
-#view-both:checked ~ .sheet .pigment {
-  grid-column: 1 / -1;
-  border-left: 0;
-}
-#view-both:checked ~ .sheet .pigment.raw {
-  clip-path: inset(0 50% 0 0);
-}
-#view-both:checked ~ .sheet .pigment.set {
-  clip-path: inset(0 0 0 50%);
-  background: linear-gradient(var(--rule), var(--rule)) calc(50% + 0.5px) 0 / 1px 100% no-repeat;
-}
 /* Names each view when the stylesheet is missing and all four show at once. */
 .pane-label {
   display: none;
@@ -498,16 +485,6 @@ code {
 .raw pre {
   margin: 0;
   color: var(--ink);
-}
-/* A source file sits straight on the sheet. Raw and typeset keep the same lines, so only the colour changes. */
-.pigment pre {
-  margin: 0;
-  padding: 0;
-  background: none;
-  border-radius: 0;
-  white-space: pre;
-  overflow-x: auto;
-  overflow-wrap: normal;
 }
 .sheet pre:focus-visible,
 .table-scroll:focus-visible {
