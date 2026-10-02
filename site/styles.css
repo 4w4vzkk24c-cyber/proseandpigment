@@ -352,16 +352,14 @@ code {
   }
   .row > :not(h2) {
     grid-column: 2;
-    max-width: 38rem;
   }
   .refusal-lines {
     grid-column: 1 / -1;
-    font-size: clamp(3.5rem, 5vw, 5rem);
-    margin-bottom: 2.5rem;
+    font-size: clamp(2.75rem, 3.9vw, 4rem);
+    margin-bottom: 2.25rem;
   }
   .refusals > p:last-child {
     grid-column: 2;
-    max-width: 38rem;
   }
 }
 .demo legend,
@@ -405,6 +403,17 @@ code {
 #view-set:focus-visible ~ .switch label[for="view-set"] {
   outline: 2px solid var(--lead);
   outline-offset: -5px;
+}
+/* On the selected option the ring sits on ink, so it takes the paper colour to stay visible. */
+#view-raw:checked:focus-visible ~ .switch label[for="view-raw"],
+#view-set:checked:focus-visible ~ .switch label[for="view-set"] {
+  outline-color: var(--paper);
+}
+@media (hover: hover) {
+  #view-raw:not(:checked) ~ .switch label[for="view-raw"]:hover,
+  #view-set:not(:checked) ~ .switch label[for="view-set"]:hover {
+    background: var(--code-ground);
+  }
 }
 
 /* One visible line that says what the switch is for. */
@@ -602,104 +611,26 @@ code {
   color: var(--quiet);
 }
 
-/* What it shows: each line is set as the thing it names. */
-.specimens {
-  list-style: none;
-  padding: 0;
+/* What it shows: a plain list, set as the Pigment theme sets one. */
+.shows {
   margin: 0;
+  padding-left: 1.35rem;
 }
-.specimens li {
-  margin: 0 0 1.6rem;
+.shows li {
+  margin: 0;
+  padding-block: 0.7rem;
+  border-bottom: 1px solid var(--rule);
 }
-.specimens li:last-child {
-  margin-bottom: 0;
+.shows li:first-child {
+  padding-top: 0;
 }
-/* The first line is a list item whose words are each set as what they name. */
-.specimens .as-list {
-  padding-left: 1.3rem;
-  position: relative;
+.shows li:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
 }
-.specimens .as-list::before {
-  content: "";
-  position: absolute;
-  left: 0.3rem;
-  top: 0.68em;
-  width: 0.4rem;
-  height: 0.4rem;
-  border-radius: 50%;
-  background: var(--lead);
-}
-.specimens .w-heading {
-  font-weight: 600;
-  font-size: 1.25em;
-}
-.specimens .w-quote {
-  padding-left: 0.4em;
-  border-left: 3px solid var(--lead);
-  font-style: italic;
-}
-.specimens .w-link {
-  color: var(--lead);
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 0.17em;
-}
-.specimens .w-em {
-  font-style: italic;
-}
-.specimens .as-code {
-  padding: 1.15rem 1.25rem;
-  border-radius: 0.4rem;
-  background: var(--code-ground);
-  font-family: var(--code);
-  font-size: 0.8125rem;
-  line-height: 1.45;
-  font-variant-ligatures: none;
-}
-.specimens .as-table {
-  display: grid;
-  grid-template-columns: repeat(4, auto);
-  border-top: 1px solid var(--ink);
-  font-size: 1.0625rem;
-}
-.specimens .as-table span {
-  padding: 0.65rem 0.75rem 0.65rem 0;
-}
-/* The commas and "and" stay for screen readers and for copying; the cells replace them on screen. */
-.specimens .as-table i {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
-}
-@media (max-width: 26rem) {
-  .specimens .as-table {
-    grid-template-columns: repeat(2, auto);
-  }
-  .specimens .as-table span:nth-child(-n + 2) {
-    border-bottom: 1px solid var(--rule);
-  }
-}
-/* The app's own paper and ink, whichever scheme the page is in. */
-.chip-light,
-.chip-dark {
-  padding: 0.05em 0.4em 0.1em;
-  border: 1px solid var(--rule);
-  border-radius: 4px;
-}
-.chip-light {
-  background: #F5F1E6;
-  color: #26221B;
-}
-.chip-dark {
-  background: #1B1916;
-  color: #ECE7DA;
-}
-.in-code {
-  font-family: var(--code);
-  font-size: 0.86em;
+/* Inline code on the page matches the theme: indigo on the code ground. */
+.shows code {
+  color: var(--tok-function);
 }
 
 /* What it doesn't do: the three refusals at the headline's size. */
@@ -819,12 +750,6 @@ pre {
   .switch label {
     min-width: 0;
   }
-  .specimens .as-table {
-    grid-template-columns: 1fr;
-  }
-  .specimens .as-table span {
-    border-bottom: 1px solid var(--rule);
-  }
   .name {
     white-space: normal;
   }
@@ -885,10 +810,5 @@ pre {
   .set pre {
     white-space: pre-wrap;
     overflow: visible;
-  }
-  .chip-light,
-  .chip-dark {
-    background: none;
-    color: inherit;
   }
 }
