@@ -67,7 +67,9 @@ body {
   color: var(--ink);
   font-family: var(--text);
   font-size: 1.125rem;
-  line-height: 1.55;
+  line-height: 1.45;
+  font-kerning: normal;
+  text-rendering: optimizeLegibility;
   font-synthesis: none;
   overflow-wrap: break-word;
   -webkit-tap-highlight-color: transparent;
@@ -144,7 +146,7 @@ li::marker {
 
 .lede {
   font-size: 1.3125rem;
-  line-height: 1.45;
+  line-height: 1.38;
 }
 .quiet {
   color: var(--quiet);
@@ -474,7 +476,7 @@ code {
   margin: 0 0 1rem;
   font-family: var(--code);
   font-size: 0.8125rem;
-  line-height: 1.65;
+  line-height: 1.45;
   white-space: pre-wrap;
   overflow-wrap: anywhere;
 }
@@ -539,11 +541,10 @@ code {
   text-align: left;
   font-weight: 600;
   border-bottom: 1px solid var(--ink);
-  padding: 0.3rem 0.6rem 0.3rem 0;
+  padding: 0.3rem 0.75rem 0.3rem 0;
 }
 .set td {
-  border-bottom: 1px solid var(--rule);
-  padding: 0.4rem 0.6rem 0.4rem 0;
+  padding: 0.4rem 0.75rem 0.4rem 0;
 }
 .set td code {
   color: var(--tok-function);
@@ -551,9 +552,8 @@ code {
 
 .demo-note {
   margin: 0.7rem 0 0;
-  font-size: 0.875rem;
+  font-size: 0.9375rem;
   color: var(--quiet);
-  text-align: center;
 }
 
 /* What it shows: each line is set as the thing it names. */
@@ -604,14 +604,13 @@ code {
   background: var(--code-ground);
   font-family: var(--code);
   font-size: 0.8125rem;
-  line-height: 1.65;
+  line-height: 1.45;
   font-variant-ligatures: none;
 }
 .specimens .as-table {
   display: grid;
   grid-template-columns: repeat(4, auto);
   border-top: 1px solid var(--ink);
-  border-bottom: 1px solid var(--rule);
   font-size: 1.0625rem;
 }
 .specimens .as-table span {
@@ -801,6 +800,16 @@ pre {
 /* On paper: light pigments whatever the screen was showing, no controls, and each file
    printed once, typeset. */
 @media print {
+  p,
+  li {
+    orphans: 2;
+    widows: 2;
+  }
+  h1,
+  h2,
+  h3 {
+    break-after: avoid;
+  }
   :root {
     color-scheme: light;
     --sheet: #fff;
