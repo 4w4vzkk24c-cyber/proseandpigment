@@ -34,39 +34,47 @@
       </div></div>
       <div class="sheet">
         <div class="pane set">
-          <h2>Renaming a batch of photos</h2>
-          <p>You can do this with a <strong>short script</strong>. It reads each file&rsquo;s date and builds the new name from it, so the order of the files doesn&rsquo;t matter.</p>
-<pre tabindex="0" aria-label="Code sample"><code><span class="c"># Rename photos to their capture date.</span>
-<span class="k">def</span> <span class="f">rename_all</span>(folder: <span class="t">Path</span>, start: <span class="t">int</span> = <span class="n">1</span>):
-    <span class="k">for</span> photo <span class="k">in</span> <span class="f">sorted</span>(folder.<span class="f">glob</span>(<span class="s">"*.jpg"</span>)):
-        stamp = <span class="f">capture_date</span>(photo)
-        photo.<span class="f">rename</span>(folder / <span class="s">f"{stamp}.jpg"</span>)</code></pre>
-          <blockquote>Run it on a copy of the folder first.</blockquote>
-          <div class="table-scroll" tabindex="0" role="region" aria-label="Options table"><table>
-            <tr><th>Option</th><th>Default</th><th>Effect</th></tr>
-            <tr><td><code>start</code></td><td><span class="n">1</span></td><td>First number used</td></tr>
-            <tr><td><code>folder</code></td><td>none</td><td>Where the photos are</td></tr>
+          <h2>Setting body text</h2>
+          <p>Start with the <strong>measure</strong>, the length of a line. Too long and the eye loses its place on the way back; too short and it never settles. Then open the <code>line-height</code> until the lines stop touching.</p>
+<pre tabindex="0" aria-label="Code sample"><code><span class="c">/* Narrow measure, open leading. */</span>
+<span class="t">article</span> {
+  <span class="f">max-width</span>: <span class="n">38rem</span>;
+  <span class="f">font-size</span>: <span class="n">1.125rem</span>;
+  <span class="f">line-height</span>: <span class="n">1.55</span>;
+  <span class="f">font-family</span>:
+    <span class="s">"Source Serif 4"</span>, <span class="k">serif</span>;
+}</code></pre>
+          <blockquote>Set the measure first. Everything after it is adjustment.</blockquote>
+          <div class="table-scroll" tabindex="0" role="region" aria-label="Settings table"><table>
+            <tr><th>Setting</th><th>Value</th><th>Change it when</th></tr>
+            <tr><td>Measure</td><td><code>38rem</code></td><td>the typeface runs wide</td></tr>
+            <tr><td>Size</td><td><code>1.125rem</code></td><td>the text is read at a distance</td></tr>
+            <tr><td>Leading</td><td><code>1.55</code></td><td>the lines get longer</td></tr>
           </table></div>
         </div>
         <div class="pane raw">
-<pre><code># Renaming a batch of photos
+<pre><code># Setting body text
 
-You can do this with a **short script**. It reads each file's date and builds the new name from it, so the order of the files doesn't matter.
+Start with the **measure**, the length of a line. Too long and the eye loses its place on the way back; too short and it never settles. Then open the `line-height` until the lines stop touching.
 
-```python
-# Rename photos to their capture date.
-def rename_all(folder: Path, start: int = 1):
-    for photo in sorted(folder.glob("*.jpg")):
-        stamp = capture_date(photo)
-        photo.rename(folder / f"{stamp}.jpg")
+```css
+/* Narrow measure, open leading. */
+article {
+  max-width: 38rem;
+  font-size: 1.125rem;
+  line-height: 1.55;
+  font-family:
+    "Source Serif 4", serif;
+}
 ```
 
-&gt; Run it on a copy of the folder first.
+&gt; Set the measure first. Everything after it is adjustment.
 
-| Option | Default | Effect |
+| Setting | Value | Change it when |
 |---|---|---|
-| `start` | 1 | First number used |
-| `folder` | none | Where the photos are |</code></pre>
+| Measure | `38rem` | the typeface runs wide |
+| Size | `1.125rem` | the text is read at a distance |
+| Leading | `1.55` | the lines get longer |</code></pre>
         </div>
       </div>
       <p class="demo-note">An illustration, drawn by this page. Screenshots of the app will replace it at release.</p>

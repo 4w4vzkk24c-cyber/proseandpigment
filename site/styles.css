@@ -356,7 +356,8 @@ code {
 .set blockquote,
 .set td,
 .set th {
-  font-size: 1.0625rem;
+  /* The page's own body size; the demo document quotes it. */
+  font-size: 1.125rem;
 }
 .set pre,
 .raw pre {
