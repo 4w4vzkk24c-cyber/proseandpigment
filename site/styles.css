@@ -307,7 +307,7 @@ code {
   font-size: 1rem;
 }
 .switch label {
-  min-width: min(6.5rem, 27vw);
+  min-width: min(6.5rem, 36vw);
   padding: 0.7rem min(1.25rem, 4vw);
   text-align: center;
   cursor: pointer;
@@ -315,13 +315,11 @@ code {
   transition: background-color 160ms ease-out, color 160ms ease-out;
 }
 #view-raw:checked ~ .switch label[for="view-raw"],
-#view-both:checked ~ .switch label[for="view-both"],
 #view-set:checked ~ .switch label[for="view-set"] {
   background: var(--ink);
   color: var(--paper);
 }
 #view-raw:focus-visible ~ .switch label[for="view-raw"],
-#view-both:focus-visible ~ .switch label[for="view-both"],
 #view-set:focus-visible ~ .switch label[for="view-set"] {
   outline: 2px solid var(--lead);
   outline-offset: -5px;
@@ -377,50 +375,24 @@ code {
   background: var(--sheet);
   border: 1px solid var(--rule);
   border-radius: 0 0.5rem 0.5rem 0.5rem;
-  /* The sheet's own width is the measure every view is set to, split or whole. */
-  container-type: inline-size;
-  --pane-pad: clamp(1.1rem, 4vw, 1.9rem);
 }
 .pane {
   grid-area: 1 / 1;
   min-width: 0;
-  padding: var(--pane-pad);
+  padding: clamp(1.1rem, 4vw, 1.9rem);
   opacity: 0;
   visibility: hidden;
   transition: opacity 180ms ease-out, visibility 0s linear 180ms;
 }
 #view-set:checked ~ #file-prose:checked ~ .sheet .prose.set,
 #view-raw:checked ~ #file-prose:checked ~ .sheet .prose.raw,
-#view-both:checked ~ #file-prose:checked ~ .sheet .prose,
 #view-set:checked ~ #file-pigment:checked ~ .sheet .pigment.set,
-#view-raw:checked ~ #file-pigment:checked ~ .sheet .pigment.raw,
-#view-both:checked ~ #file-pigment:checked ~ .sheet .pigment {
+#view-raw:checked ~ #file-pigment:checked ~ .sheet .pigment.raw {
   opacity: 1;
   visibility: visible;
   transition: opacity 180ms ease-out;
 }
 
-/* Both: the raw file on the left, the typeset page on the right. Each half is the whole
-   view, set to the sheet's full width and cropped, so nothing reflows and the sheet keeps
-   its height. */
-#view-both:checked ~ .sheet {
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-}
-#view-both:checked ~ .sheet .pane {
-  overflow: hidden;
-  overflow: clip;
-}
-#view-both:checked ~ .sheet .raw {
-  grid-column: 1;
-}
-#view-both:checked ~ .sheet .set {
-  grid-column: 2;
-  border-left: 1px solid var(--rule);
-}
-#view-both:checked ~ .sheet .pane > * {
-  width: calc(100cqw - 2 * var(--pane-pad));
-  max-width: none;
-}
 /* Names each view when the stylesheet is missing and all four show at once. */
 .pane-label {
   display: none;
@@ -435,7 +407,6 @@ code {
 /* Forced colours drop backgrounds, so the chosen option is marked with the system highlight. */
 @media (forced-colors: active) {
   #view-raw:checked ~ .switch label[for="view-raw"],
-  #view-both:checked ~ .switch label[for="view-both"],
   #view-set:checked ~ .switch label[for="view-set"],
   #file-prose:checked ~ .tabs label[for="file-prose"],
   #file-pigment:checked ~ .tabs label[for="file-pigment"] {
@@ -750,27 +721,6 @@ pre {
   }
   .name {
     white-space: normal;
-  }
-  /* Too narrow for two halves side by side: Both shows the raw file, then the typeset page. */
-  #view-both:checked ~ .sheet {
-    grid-template-columns: minmax(0, 1fr);
-  }
-  #view-both:checked ~ .sheet .pane {
-    overflow: visible;
-  }
-  #view-both:checked ~ .sheet .raw {
-    grid-area: 1 / 1;
-    clip-path: none;
-  }
-  #view-both:checked ~ .sheet .set {
-    grid-area: 2 / 1;
-    clip-path: none;
-    background: none;
-    border-left: 0;
-    border-top: 1px solid var(--rule);
-  }
-  #view-both:checked ~ .sheet .pane > * {
-    width: auto;
   }
 }
 
