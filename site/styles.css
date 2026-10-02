@@ -1,0 +1,233 @@
+/* Prose & Pigment. Reading pages in the app's own faces and the Fresco pigments. */
+
+@font-face {
+  font-family: "Source Serif 4";
+  src: url("/fonts/source-serif-4.woff2") format("woff2");
+  font-display: swap;
+}
+@font-face {
+  font-family: "Source Serif 4";
+  font-style: italic;
+  src: url("/fonts/source-serif-4-italic.woff2") format("woff2");
+  font-display: swap;
+}
+@font-face {
+  font-family: "Source Serif 4";
+  font-weight: 600;
+  src: url("/fonts/source-serif-4-600.woff2") format("woff2");
+  font-display: swap;
+}
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/fonts/jetbrains-mono.woff2") format("woff2");
+  font-display: swap;
+}
+
+:root {
+  color-scheme: light dark;
+  --paper: #F5F1E6;
+  --ink: #26221B;
+  --quiet: #716C62;
+  --rule: #DAD4C5;
+  /* Vermilion, darkened until it reads at 4.5:1 on paper. */
+  --lead: #C13F29;
+  --code-ground: #EDE8DA;
+
+  --text: "Source Serif 4", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  --code: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  --margin: clamp(1.25rem, 5vw, 3rem);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #1B1916;
+    --ink: #ECE7DA;
+    --quiet: #8A8377;
+    --rule: #3A362F;
+    --lead: #D75B46;
+    --code-ground: #24211D;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  background: var(--paper);
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--text);
+  font-size: 1.125rem;
+  line-height: 1.55;
+  font-synthesis: none;
+  overflow-wrap: break-word;
+  -webkit-tap-highlight-color: transparent;
+}
+
+::selection {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.page {
+  max-width: 38rem;
+  margin-inline: auto;
+  padding: clamp(1.75rem, 6vw, 3.5rem) var(--margin) 3rem;
+}
+
+/* The masthead: the mark and the name, linking home. */
+
+.masthead {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: clamp(2.5rem, 8vw, 4.5rem);
+  padding-block: 0.4rem;
+  color: var(--ink);
+  font-weight: 600;
+  font-size: 1.0625rem;
+  text-decoration: none;
+}
+.masthead svg {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0.45rem;
+}
+
+h1,
+h2,
+h3 {
+  font-weight: 600;
+  line-height: 1.2;
+  text-wrap: balance;
+}
+h1 {
+  font-size: clamp(1.875rem, 1.2rem + 3.4vw, 2.75rem);
+  margin: 0 0 1rem;
+}
+h2 {
+  font-size: 1.3125rem;
+  margin: 2.75rem 0 0.6rem;
+  padding-top: 1rem;
+  border-top: 2px solid var(--lead);
+}
+h3 {
+  font-size: 1.125rem;
+  margin: 1.5rem 0 0.3rem;
+}
+
+p,
+ul,
+ol {
+  margin: 0 0 1rem;
+  text-wrap: pretty;
+}
+ul,
+ol {
+  padding-left: 1.3rem;
+}
+li {
+  margin-bottom: 0.35rem;
+}
+li::marker {
+  color: var(--lead);
+}
+
+.lede {
+  font-size: 1.3125rem;
+  line-height: 1.45;
+}
+.quiet {
+  color: var(--quiet);
+}
+.status {
+  font-style: italic;
+  color: var(--quiet);
+}
+
+a {
+  color: var(--lead);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.17em;
+  touch-action: manipulation;
+}
+a:hover,
+a:active {
+  text-decoration-thickness: 2px;
+}
+a:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+code {
+  font-family: var(--code);
+  font-size: 0.86em;
+  background: var(--code-ground);
+  padding: 0.1em 0.3em;
+  border-radius: 4px;
+}
+
+/* A list of links that each need a full-size touch target. */
+.links {
+  list-style: none;
+  padding: 0;
+  margin: 2rem 0 0;
+}
+.links li {
+  margin: 0;
+  border-top: 1px solid var(--rule);
+}
+.links li:last-child {
+  border-bottom: 1px solid var(--rule);
+}
+.links a {
+  display: block;
+  padding-block: 0.8rem;
+}
+
+.small-print {
+  margin-top: 3.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--rule);
+  font-size: 0.9375rem;
+  color: var(--quiet);
+}
+.small-print a {
+  color: inherit;
+  /* A 44px target for links that sit alone in the footer. */
+  display: inline-block;
+  padding-block: 0.75rem;
+  margin-block: -0.45rem;
+}
+.small-print p {
+  margin-bottom: 0.3rem;
+}
+
+@media (prefers-contrast: more) {
+  :root {
+    --quiet: var(--ink);
+    --rule: var(--ink);
+  }
+}
+
+@media print {
+  :root {
+    --paper: #fff;
+    --ink: #000;
+    --quiet: #333;
+    --rule: #999;
+    --lead: #000;
+    --code-ground: #eee;
+  }
+}

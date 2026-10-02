@@ -1,0 +1,11 @@
+# This repository is public. Only what the website already serves is tracked.
+# Everything is ignored unless it is allowed below.
+/*
+!/.gitignore
+!/.editorconfig
+!/README.md
+!/vercel.json
+!/site/
+
+.DS_Store
+Thumbs.db
