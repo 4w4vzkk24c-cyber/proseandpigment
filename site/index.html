@@ -37,15 +37,16 @@
         <label for="view-raw">Raw<span class="vh"> view</span></label>
         <label for="view-set">Typeset<span class="vh"> view</span></label>
       </div></div>
+      <p class="demo-hint">Switch to Raw to see the file as it arrived.</p>
       <div class="tabs">
-        <label for="file-prose">Prose<span class="vh"> file</span></label>
-        <label for="file-pigment">Pigment<span class="vh"> file</span></label>
+        <label for="file-prose" translate="no">prose.md<span class="vh"> file</span></label>
+        <label for="file-pigment" translate="no">pigment.md<span class="vh"> file</span></label>
       </div>
       <div class="sheet">
         <div class="pane prose set">
           <p class="pane-label">Prose, typeset</p>
           <h2>Setting body text</h2>
-          <p>Start with the <strong>measure</strong>, the length of a line. Too long and the eye loses its place on the way back; too short and it never settles. Then open the <code>line-height</code> until the lines stop touching.</p>
+          <p>Start with the <strong>measure</strong>, the length of a line. Then open the <code>line-height</code> until the lines stop touching.</p>
 <pre tabindex="0" role="region" aria-label="Code sample" translate="no"><code><span class="c">/* Narrow measure, open leading. */</span>
 <span class="t">article</span> {
   <span class="f">max-width</span>: <span class="n">38rem</span>;
@@ -66,7 +67,7 @@
           <p class="pane-label">Prose, raw</p>
 <pre><code># Setting body text
 
-Start with the **measure**, the length of a line. Too long and the eye loses its place on the way back; too short and it never settles. Then open the `line-height` until the lines stop touching.
+Start with the **measure**, the length of a line. Then open the `line-height` until the lines stop touching.
 
 ```css
 /* Narrow measure, open leading. */
@@ -90,7 +91,7 @@ article {
         <div class="pane pigment set">
           <p class="pane-label">Pigment, typeset</p>
           <h2>Naming a colour</h2>
-          <p>Give every colour a <strong>name</strong> and write its value once. A <code>Pigment</code> keeps the two together, so a view asks for the name and never repeats the number.</p>
+          <p>Give every colour a <strong>name</strong> and write its value once. A <code>Pigment</code> keeps the two together.</p>
 <pre tabindex="0" role="region" aria-label="Swift sample" translate="no"><code><span class="c">// One name, one value.</span>
 <span class="k">struct</span> <span class="t">Pigment</span> {
   <span class="k">let</span> name: <span class="t">String</span>
@@ -115,7 +116,7 @@ article {
           <p class="pane-label">Pigment, raw</p>
 <pre><code># Naming a colour
 
-Give every colour a **name** and write its value once. A `Pigment` keeps the two together, so a view asks for the name and never repeats the number.
+Give every colour a **name** and write its value once. A `Pigment` keeps the two together.
 
 ```swift
 // One name, one value.
@@ -174,8 +175,11 @@ let lead = Pigment(
     </section>
 
     <div class="close">
+      <svg class="close-mark" width="96" height="96" aria-hidden="true" focusable="false" viewBox="0 0 1024 1024"><use href="#mark" width="1024" height="1024"/></svg>
+      <div>
       <p class="close-name" translate="no">Prose &amp; Pigment</p>
       <p class="status">For iPhone and iPad. Not yet released.</p>
+      </div>
     </div>
   </main>
   <footer class="small-print">

@@ -266,17 +266,18 @@ code {
 
 .landing {
   max-width: 42rem;
+  padding-top: clamp(1.25rem, 5vw, 3.5rem);
   /* The space between sections: the page's main unit of white space. */
   --section-gap: clamp(4.5rem, 12vw, 7.5rem);
   --col-gap: clamp(3rem, 5vw, 5.5rem);
 }
 .landing .masthead {
-  margin-bottom: clamp(3rem, 10vw, 5.5rem);
+  margin-bottom: clamp(1.75rem, 8vw, 5.5rem);
 }
 .landing h1 {
   font-size: clamp(2.125rem, 1.2rem + 4.6vw, 3.5rem);
   line-height: 1.08;
-  margin-bottom: 1.6rem;
+  margin-bottom: 1.25rem;
 }
 .landing .lede {
   max-width: 34rem;
@@ -289,7 +290,11 @@ code {
 .close {
   margin-top: var(--section-gap);
   padding-top: 1.75rem;
-  border-top: 2px solid var(--lead);
+  border-top: 1px solid var(--rule);
+}
+/* The one vermilion rule on the page marks its loudest statement. */
+.refusals {
+  border-top: 3px solid var(--lead);
 }
 .landing h2 {
   margin: 0 0 1.5rem;
@@ -307,7 +312,7 @@ code {
 .demo {
   border: 0;
   padding: 0;
-  margin: clamp(2.5rem, 8vw, 3.5rem) 0 0;
+  margin: clamp(1.75rem, 7vw, 3.5rem) 0 0;
   min-width: 0;
 }
 
@@ -336,6 +341,10 @@ code {
   }
   .hero .demo {
     margin-top: 0;
+  }
+  .set pre,
+  .raw pre {
+    font-size: 0.9375rem;
   }
   .landing .row h2 {
     margin: 0;
@@ -369,7 +378,7 @@ code {
 .switch {
   display: flex;
   justify-content: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.6rem;
 }
 .switch-track {
   display: inline-flex;
@@ -398,6 +407,14 @@ code {
   outline-offset: -5px;
 }
 
+/* One visible line that says what the switch is for. */
+.demo-hint {
+  margin: 0 0 0.6rem;
+  font-size: 0.9375rem;
+  color: var(--quiet);
+  text-align: center;
+}
+
 /* The two files, as tabs on the sheet's top edge. The open tab carries the vermilion rule. */
 .tabs {
   display: flex;
@@ -407,14 +424,17 @@ code {
 }
 .tabs label {
   position: relative;
-  padding: 0.45rem min(1.25rem, 4.5vw) 0.5rem;
+  padding: 0.35rem min(1rem, 4vw) 0.4rem;
   border: 1px solid transparent;
   border-top: 3px solid transparent;
   border-bottom: 0;
   border-radius: 0.4rem 0.4rem 0 0;
   color: var(--quiet);
-  font-weight: 600;
-  font-size: 1rem;
+  /* File names are file content, so they take the code face. */
+  font-family: var(--code);
+  font-variant-ligatures: none;
+  font-size: 0.875rem;
+  line-height: 1.75;
   cursor: pointer;
   touch-action: manipulation;
   transition: color 160ms ease-out;
@@ -423,7 +443,7 @@ code {
 .tabs label::before {
   content: "";
   position: absolute;
-  inset: -0.25rem 0 0;
+  inset: -0.6rem 0 0;
 }
 .tabs label:hover {
   color: var(--ink);
@@ -452,7 +472,7 @@ code {
 .pane {
   grid-area: 1 / 1;
   min-width: 0;
-  padding: clamp(1.5rem, 6vw, 3rem);
+  padding: clamp(1.25rem, 5vw, 3rem);
   opacity: 0;
   visibility: hidden;
   transition: opacity 180ms ease-out, visibility 0s linear 180ms;
@@ -503,7 +523,7 @@ code {
   font-size: 1.125rem;
 }
 .set p {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.25rem;
 }
 .set pre,
 .raw pre {
@@ -518,7 +538,7 @@ code {
 .set pre {
   background: var(--code-ground);
   border-radius: 0.4rem;
-  padding: 1.15rem 1.25rem;
+  padding: 1.15rem min(1.25rem, 4vw);
   white-space: pre;
   overflow-x: auto;
   overflow-wrap: normal;
@@ -717,6 +737,21 @@ code {
 }
 
 /* The page ends on the name and where the app stands. */
+.close {
+  display: flex;
+  align-items: center;
+  gap: clamp(1rem, 4vw, 1.75rem);
+}
+.close > div {
+  min-width: 0;
+}
+.close-mark {
+  flex: none;
+  width: clamp(4.5rem, 18vw, 6rem);
+  height: auto;
+  aspect-ratio: 1;
+  border-radius: 22%;
+}
 .close-name {
   margin: 0 0 0.5rem;
   font-weight: 600;
@@ -790,6 +825,9 @@ pre {
   }
   .name {
     white-space: normal;
+  }
+  .close {
+    flex-wrap: wrap;
   }
 }
 
