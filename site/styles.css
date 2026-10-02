@@ -245,12 +245,12 @@ code {
 
 :root {
   --sheet: #FBF8F0;
-  --tok-keyword: #B93D28;
+  --tok-keyword: #B93C27;
   --tok-function: #34446E;
   --tok-string: #586F49;
   --tok-number: #82601E;
   --tok-type: #5E4034;
-  --tok-comment: #6C665D;
+  --tok-comment: #6C675D;
 }
 @media (prefers-color-scheme: dark) {
   :root {
@@ -589,7 +589,9 @@ code {
 }
 .set td {
   padding: 0.6rem 0.75rem 0.6rem 0;
+  border-bottom: 1px solid var(--rule);
 }
+.set p code,
 .set td code {
   color: var(--tok-function);
 }
