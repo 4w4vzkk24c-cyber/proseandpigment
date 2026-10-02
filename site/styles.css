@@ -303,7 +303,7 @@ code {
   font-size: 1rem;
 }
 .switch label {
-  min-width: min(6.5rem, 36vw);
+  min-width: min(6.5rem, 27vw);
   padding: 0.7rem min(1.25rem, 4vw);
   text-align: center;
   cursor: pointer;
@@ -311,11 +311,13 @@ code {
   transition: background-color 160ms ease-out, color 160ms ease-out;
 }
 #view-raw:checked ~ .switch label[for="view-raw"],
+#view-both:checked ~ .switch label[for="view-both"],
 #view-set:checked ~ .switch label[for="view-set"] {
   background: var(--ink);
   color: var(--paper);
 }
 #view-raw:focus-visible ~ .switch label[for="view-raw"],
+#view-both:focus-visible ~ .switch label[for="view-both"],
 #view-set:focus-visible ~ .switch label[for="view-set"] {
   outline: 2px solid var(--lead);
   outline-offset: -5px;
@@ -346,7 +348,7 @@ code {
 .tabs label::before {
   content: "";
   position: absolute;
-  inset: -0.6rem 0 0;
+  inset: -0.45rem 0 0;
 }
 .tabs label:hover {
   color: var(--ink);
@@ -371,22 +373,61 @@ code {
   background: var(--sheet);
   border: 1px solid var(--rule);
   border-radius: 0 0.5rem 0.5rem 0.5rem;
+  /* The sheet's own width is the measure every view is set to, split or whole. */
+  container-type: inline-size;
+  --pane-pad: clamp(1.1rem, 4vw, 1.9rem);
 }
 .pane {
   grid-area: 1 / 1;
   min-width: 0;
-  padding: clamp(1.1rem, 4vw, 1.9rem);
+  padding: var(--pane-pad);
   opacity: 0;
   visibility: hidden;
   transition: opacity 180ms ease-out, visibility 0s linear 180ms;
 }
-#file-prose:checked ~ #view-set:checked ~ .sheet .prose.set,
-#file-prose:checked ~ #view-raw:checked ~ .sheet .prose.raw,
-#file-pigment:checked ~ #view-set:checked ~ .sheet .pigment.set,
-#file-pigment:checked ~ #view-raw:checked ~ .sheet .pigment.raw {
+#view-set:checked ~ #file-prose:checked ~ .sheet .prose.set,
+#view-raw:checked ~ #file-prose:checked ~ .sheet .prose.raw,
+#view-both:checked ~ #file-prose:checked ~ .sheet .prose,
+#view-set:checked ~ #file-pigment:checked ~ .sheet .pigment.set,
+#view-raw:checked ~ #file-pigment:checked ~ .sheet .pigment.raw,
+#view-both:checked ~ #file-pigment:checked ~ .sheet .pigment {
   opacity: 1;
   visibility: visible;
   transition: opacity 180ms ease-out;
+}
+
+/* Both: the raw file on the left, the typeset page on the right. Each half is the whole
+   view, set to the sheet's full width and cropped, so nothing reflows and the sheet keeps
+   its height. */
+#view-both:checked ~ .sheet {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+#view-both:checked ~ .sheet .pane {
+  overflow: hidden;
+}
+#view-both:checked ~ .sheet .raw {
+  grid-column: 1;
+}
+#view-both:checked ~ .sheet .set {
+  grid-column: 2;
+  border-left: 1px solid var(--rule);
+}
+#view-both:checked ~ .sheet .pane > * {
+  width: calc(100cqw - 2 * var(--pane-pad));
+  max-width: none;
+}
+/* A source file keeps the same lines in both views, so its two halves meet as one block:
+   plain to the left of the line, coloured to the right. */
+#view-both:checked ~ .sheet .pigment {
+  grid-column: 1 / -1;
+  border-left: 0;
+}
+#view-both:checked ~ .sheet .pigment.raw {
+  clip-path: inset(0 50% 0 0);
+}
+#view-both:checked ~ .sheet .pigment.set {
+  clip-path: inset(0 0 0 50%);
+  background: linear-gradient(var(--rule), var(--rule)) calc(50% + 0.5px) 0 / 1px 100% no-repeat;
 }
 /* Names each view when the stylesheet is missing and all four show at once. */
 .pane-label {
@@ -402,6 +443,7 @@ code {
 /* Forced colours drop backgrounds, so the chosen option is marked with the system highlight. */
 @media (forced-colors: active) {
   #view-raw:checked ~ .switch label[for="view-raw"],
+  #view-both:checked ~ .switch label[for="view-both"],
   #view-set:checked ~ .switch label[for="view-set"],
   #file-prose:checked ~ .tabs label[for="file-prose"],
   #file-pigment:checked ~ .tabs label[for="file-pigment"] {

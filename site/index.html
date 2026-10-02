@@ -26,12 +26,14 @@
 
     <fieldset class="demo">
       <legend>Choose a file, and how to show it</legend>
+      <input type="radio" name="view" id="view-raw">
+      <input type="radio" name="view" id="view-both" checked>
+      <input type="radio" name="view" id="view-set">
       <input type="radio" name="file" id="file-prose" checked>
       <input type="radio" name="file" id="file-pigment">
-      <input type="radio" name="view" id="view-raw">
-      <input type="radio" name="view" id="view-set" checked>
       <div class="switch"><div class="switch-track">
         <label for="view-raw">Raw</label>
+        <label for="view-both">Both</label>
         <label for="view-set">Typeset</label>
       </div></div>
       <div class="tabs">
