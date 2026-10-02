@@ -231,3 +231,204 @@ code {
     --code-ground: #eee;
   }
 }
+
+/* The landing page. One document, shown typeset or raw, switched without script. */
+
+:root {
+  --sheet: #FBF8F0;
+  --tok-keyword: #B93D28;
+  --tok-function: #34446E;
+  --tok-string: #586F49;
+  --tok-number: #82601E;
+  --tok-type: #5E4034;
+  --tok-comment: #6C665D;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --sheet: #211E1A;
+    --tok-keyword: #DA6653;
+    --tok-function: #7488BD;
+    --tok-string: #73915F;
+    --tok-number: #BC8A2C;
+    --tok-type: #AD7D6A;
+    --tok-comment: #8F887C;
+  }
+}
+
+.landing {
+  max-width: 42rem;
+}
+.landing h1 {
+  font-size: clamp(2.125rem, 1.2rem + 4.6vw, 3.5rem);
+  line-height: 1.08;
+  margin-bottom: 1.1rem;
+}
+.landing .lede {
+  max-width: 34rem;
+}
+
+.demo {
+  border: 0;
+  padding: 0;
+  margin: 2.5rem 0 0;
+  min-width: 0;
+}
+.demo legend,
+.demo input {
+  /* Present for keyboards and screen readers, not drawn. */
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.switch {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.25rem;
+}
+.switch-track {
+  display: inline-flex;
+  border: 1.5px solid var(--ink);
+  border-radius: 0.7rem;
+  overflow: hidden;
+  font-weight: 600;
+  font-size: 1rem;
+}
+.switch label {
+  min-width: min(6.5rem, 36vw);
+  padding: 0.7rem min(1.25rem, 4vw);
+  text-align: center;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: background-color 160ms ease-out, color 160ms ease-out;
+}
+#view-raw:checked ~ .switch label[for="view-raw"],
+#view-set:checked ~ .switch label[for="view-set"] {
+  background: var(--ink);
+  color: var(--paper);
+}
+#view-raw:focus-visible ~ .switch label[for="view-raw"],
+#view-set:focus-visible ~ .switch label[for="view-set"] {
+  outline: 2px solid var(--lead);
+  outline-offset: -5px;
+}
+
+/* Both versions occupy the same cell, so the page does not jump when they swap. */
+.sheet {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  background: var(--sheet);
+  border: 1px solid var(--rule);
+  border-top: 3px solid var(--lead);
+  border-radius: 0 0 0.5rem 0.5rem;
+}
+.pane {
+  grid-area: 1 / 1;
+  min-width: 0;
+  padding: clamp(1.1rem, 4vw, 1.9rem);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 180ms ease-out, visibility 0s linear 180ms;
+}
+#view-set:checked ~ .sheet .set,
+#view-raw:checked ~ .sheet .raw {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 180ms ease-out;
+}
+@media (prefers-reduced-motion: reduce) {
+  .pane,
+  .switch label {
+    transition: none !important;
+  }
+}
+
+.set h2 {
+  border: 0;
+  padding: 0;
+  margin: 0 0 0.6rem;
+  font-size: 1.5rem;
+}
+.set p,
+.set blockquote,
+.set td,
+.set th {
+  font-size: 1.0625rem;
+}
+.set pre,
+.raw pre {
+  margin: 0 0 1rem;
+  font-family: var(--code);
+  font-size: 0.8125rem;
+  line-height: 1.65;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+/* Code keeps its lines and scrolls sideways, as code does; it never wraps mid-statement. */
+.set pre {
+  background: var(--code-ground);
+  border-radius: 0.4rem;
+  padding: 0.9rem 1rem;
+  white-space: pre;
+  overflow-x: auto;
+  overflow-wrap: normal;
+}
+.set pre code,
+.raw pre code {
+  background: none;
+  padding: 0;
+  font-size: inherit;
+}
+.raw pre {
+  margin: 0;
+  color: var(--ink);
+}
+.k { color: var(--tok-keyword); }
+.f { color: var(--tok-function); }
+.s { color: var(--tok-string); }
+.n { color: var(--tok-number); }
+.t { color: var(--tok-type); }
+.c { color: var(--tok-comment); font-style: italic; }
+
+.set blockquote {
+  margin: 0 0 1rem;
+  padding: 0.1rem 0 0.1rem 0.9rem;
+  border-left: 3px solid var(--lead);
+  font-style: italic;
+}
+/* A wide table scrolls sideways, as it does in the app. */
+.table-scroll {
+  overflow-x: auto;
+}
+.set table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0;
+}
+.set th {
+  text-align: left;
+  font-weight: 600;
+  border-bottom: 1px solid var(--ink);
+  padding: 0.3rem 0.6rem 0.3rem 0;
+}
+.set td {
+  border-bottom: 1px solid var(--rule);
+  padding: 0.4rem 0.6rem 0.4rem 0;
+}
+.set td code {
+  color: var(--tok-function);
+}
+
+.demo-note {
+  margin: 0.7rem 0 0;
+  font-size: 0.875rem;
+  color: var(--quiet);
+  text-align: center;
+}
+
+.landing .status {
+  margin-top: 2.5rem;
+}

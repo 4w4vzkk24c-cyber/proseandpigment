@@ -18,16 +18,79 @@
 <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-<div class="page">
+<div class="page landing">
   <a class="masthead" href="/" translate="no"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"><defs><clipPath id="p0"><path d="M-60 36 L-74 -300 A74 74 0 0 1 74 -300 L60 36 Z" transform="translate(512 536) rotate(0)"/></clipPath><clipPath id="p1"><path d="M-60 36 L-74 -300 A74 74 0 0 1 74 -300 L60 36 Z" transform="translate(512 536) rotate(72)"/></clipPath><clipPath id="p2"><path d="M-60 36 L-74 -300 A74 74 0 0 1 74 -300 L60 36 Z" transform="translate(512 536) rotate(144)"/></clipPath><clipPath id="p3"><path d="M-60 36 L-74 -300 A74 74 0 0 1 74 -300 L60 36 Z" transform="translate(512 536) rotate(216)"/></clipPath><clipPath id="p4"><path d="M-60 36 L-74 -300 A74 74 0 0 1 74 -300 L60 36 Z" transform="translate(512 536) rotate(288)"/></clipPath></defs><rect width="1024" height="1024" fill="#F5F1E6"/><path d="M-60 36 L-74 -300 A74 74 0 0 1 74 -300 L60 36 Z" fill="#D2452D" transform="translate(512 536) rotate(0)"/><path d="M-60 36 L-74 -300 A74 74 0 0 1 74 -300 L60 36 Z" fill="#34446E" transform="translate(512 536) rotate(72)"/><path d="M-60 36 L-74 -300 A74 74 0 0 1 74 -300 L60 36 Z" fill="#6E8B5B" transform="translate(512 536) rotate(144)"/><path d="M-60 36 L-74 -300 A74 74 0 0 1 74 -300 L60 36 Z" fill="#BC8A2C" transform="translate(512 536) rotate(216)"/><path d="M-60 36 L-74 -300 A74 74 0 0 1 74 -300 L60 36 Z" fill="#5E4034" transform="translate(512 536) rotate(288)"/><g clip-path="url(#p0)"><path d="M-60 36 L-74 -300 A74 74 0 0 1 74 -300 L60 36 Z" fill="#53292E" transform="translate(512 536) rotate(72)"/></g><g clip-path="url(#p1)"><path d="M-60 36 L-74 -300 A74 74 0 0 1 74 -300 L60 36 Z" fill="#314343" transform="translate(512 536) rotate(144)"/></g><g clip-path="url(#p2)"><path d="M-60 36 L-74 -300 A74 74 0 0 1 74 -300 L60 36 Z" fill="#706827" transform="translate(512 536) rotate(216)"/></g><g clip-path="url(#p3)"><path d="M-60 36 L-74 -300 A74 74 0 0 1 74 -300 L60 36 Z" fill="#66401B" transform="translate(512 536) rotate(288)"/></g><g clip-path="url(#p4)"><path d="M-60 36 L-74 -300 A74 74 0 0 1 74 -300 L60 36 Z" fill="#6F271B" transform="translate(512 536) rotate(0)"/></g><polygon points="557.8,472.9 586.2,560.1 512.0,614.0 437.8,560.1 466.2,472.9" fill="#26221B"/></svg>Prose &amp; Pigment</a>
   <main>
     <h1>A reader for what your assistants write.</h1>
     <p class="lede"><span translate="no">Prose&nbsp;&amp;&nbsp;Pigment</span> turns a Markdown, text or code file into a typeset page, with the code in colour. It never edits the file, syncs it or sends it anywhere.</p>
-    <p class="status">For iPhone and iPad. Not yet released.</p>
-    <ul class="links">
-      <li><a href="/support">Support: how it works, and how to reach me</a></li>
-      <li><a href="/privacy">Privacy: what the app collects, which is nothing</a></li>
+
+    <fieldset class="demo">
+      <legend>Show the same file as</legend>
+      <input type="radio" name="view" id="view-raw">
+      <input type="radio" name="view" id="view-set" checked>
+      <div class="switch"><div class="switch-track">
+        <label for="view-raw">Raw</label>
+        <label for="view-set">Typeset</label>
+      </div></div>
+      <div class="sheet">
+        <div class="pane set">
+          <h2>Renaming a batch of photos</h2>
+          <p>You can do this with a <strong>short script</strong>. It reads each file&rsquo;s date and builds the new name from it, so the order of the files doesn&rsquo;t matter.</p>
+<pre tabindex="0" aria-label="Code sample"><code><span class="c"># Rename photos to their capture date.</span>
+<span class="k">def</span> <span class="f">rename_all</span>(folder: <span class="t">Path</span>, start: <span class="t">int</span> = <span class="n">1</span>):
+    <span class="k">for</span> photo <span class="k">in</span> <span class="f">sorted</span>(folder.<span class="f">glob</span>(<span class="s">"*.jpg"</span>)):
+        stamp = <span class="f">capture_date</span>(photo)
+        photo.<span class="f">rename</span>(folder / <span class="s">f"{stamp}.jpg"</span>)</code></pre>
+          <blockquote>Run it on a copy of the folder first.</blockquote>
+          <div class="table-scroll" tabindex="0" role="region" aria-label="Options table"><table>
+            <tr><th>Option</th><th>Default</th><th>Effect</th></tr>
+            <tr><td><code>start</code></td><td><span class="n">1</span></td><td>First number used</td></tr>
+            <tr><td><code>folder</code></td><td>none</td><td>Where the photos are</td></tr>
+          </table></div>
+        </div>
+        <div class="pane raw">
+<pre><code># Renaming a batch of photos
+
+You can do this with a **short script**. It reads each file's date and builds the new name from it, so the order of the files doesn't matter.
+
+```python
+# Rename photos to their capture date.
+def rename_all(folder: Path, start: int = 1):
+    for photo in sorted(folder.glob("*.jpg")):
+        stamp = capture_date(photo)
+        photo.rename(folder / f"{stamp}.jpg")
+```
+
+&gt; Run it on a copy of the folder first.
+
+| Option | Default | Effect |
+|---|---|---|
+| `start` | 1 | First number used |
+| `folder` | none | Where the photos are |</code></pre>
+        </div>
+      </div>
+      <p class="demo-note">An illustration, drawn by this page. Screenshots of the app will replace it at release.</p>
+    </fieldset>
+
+    <h2>What it shows</h2>
+    <ul>
+      <li>Headings, lists, quotes, links and emphasis</li>
+      <li>Code blocks in colour, in 19 languages, including Swift, Python, JavaScript, TypeScript, Rust, Go, SQL and shell</li>
+      <li>Source files on their own: open a <code>.py</code> or <code>.swift</code> file and read it highlighted</li>
+      <li>Tables, task lists, callouts and footnotes</li>
+      <li>More than 30 themes, light and dark, each with its own reading font and code font</li>
     </ul>
+
+    <h2>What it doesn&rsquo;t do</h2>
+    <p>It doesn&rsquo;t edit, it doesn&rsquo;t sync, and it keeps no library. It reads the file you hand it. It doesn&rsquo;t take pasted or shared text yet; for now it opens files.</p>
+
+    <h2>Private</h2>
+    <p>No account, no analytics, no ads. Files are read on your device and never uploaded, and the app loads nothing from the internet. The <a href="/privacy">privacy policy</a> says the same thing at more length.</p>
+
+    <h2>Who makes it</h2>
+    <p>I do, alone. I built it to read what my agents write. Questions go to <a href="mailto:hello@crossedkeys.co" translate="no">hello@crossedkeys.co</a>, and the <a href="/support">support page</a> covers how the app works.</p>
+
+    <p class="status">For iPhone and iPad. Not yet released.</p>
   </main>
   <footer class="small-print">
     <p><a href="/">Home</a> · <a href="/privacy">Privacy</a> · <a href="/support">Support</a></p>
