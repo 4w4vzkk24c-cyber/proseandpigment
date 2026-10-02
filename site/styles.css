@@ -214,6 +214,8 @@ code {
   display: inline-block;
   padding-block: 0.75rem;
   margin-block: -0.45rem;
+  padding-inline: 0.25rem;
+  margin-inline: -0.25rem;
 }
 .small-print p {
   margin-bottom: 0.3rem;
@@ -404,6 +406,7 @@ code {
 }
 #view-both:checked ~ .sheet .pane {
   overflow: hidden;
+  overflow: clip;
 }
 #view-both:checked ~ .sheet .raw {
   grid-column: 1;
@@ -706,4 +709,141 @@ code {
 }
 .close .status {
   margin: 0;
+}
+
+/* Hardening: what the page does when conditions are not the ones it was drawn for. */
+
+/* Code and raw files read left to right whatever direction the page is in. */
+pre {
+  direction: ltr;
+  text-align: left;
+  unicode-bidi: isolate;
+}
+
+.name {
+  white-space: nowrap;
+}
+
+/* Read aloud, never drawn. */
+.vh {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* A translated label can be half again as long: the switch grows, then wraps, before it overflows. */
+.switch-track {
+  max-width: 100%;
+  flex-wrap: wrap;
+}
+.switch label {
+  flex: 1 1 auto;
+}
+.tabs {
+  flex-wrap: wrap;
+}
+.tabs label {
+  white-space: nowrap;
+}
+
+/* Text set very large, or a very narrow window: the column is under 18 of the reader's own
+   ems. Long words hyphenate instead of snapping mid-letter, and the switch stacks. */
+@media (max-width: 18em) {
+  h1,
+  .refusal-lines,
+  .close-name {
+    hyphens: auto;
+    -webkit-hyphens: auto;
+  }
+  .switch-track {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  .switch label {
+    min-width: 0;
+  }
+  .specimens .as-table {
+    grid-template-columns: 1fr;
+  }
+  .specimens .as-table span {
+    border-bottom: 1px solid var(--rule);
+  }
+  .name {
+    white-space: normal;
+  }
+  /* Too narrow for two halves side by side: Both shows the raw file, then the typeset page. */
+  #view-both:checked ~ .sheet {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  #view-both:checked ~ .sheet .pane {
+    overflow: visible;
+  }
+  #view-both:checked ~ .sheet .raw {
+    grid-area: 1 / 1;
+    clip-path: none;
+  }
+  #view-both:checked ~ .sheet .set {
+    grid-area: 2 / 1;
+    clip-path: none;
+    background: none;
+    border-left: 0;
+    border-top: 1px solid var(--rule);
+  }
+  #view-both:checked ~ .sheet .pane > * {
+    width: auto;
+  }
+}
+
+/* On paper: light pigments whatever the screen was showing, no controls, and each file
+   printed once, typeset. */
+@media print {
+  :root {
+    color-scheme: light;
+    --sheet: #fff;
+    --tok-keyword: #9A2F1D;
+    --tok-function: #2B3960;
+    --tok-string: #45593A;
+    --tok-number: #6B4E14;
+    --tok-type: #4D332A;
+    --tok-comment: #555;
+  }
+  .switch,
+  .tabs,
+  .demo .raw {
+    display: none !important;
+  }
+  .demo .sheet {
+    display: block !important;
+    border-radius: 0;
+  }
+  /* These outrank the on-screen state rules, which are keyed to the controls' ids. */
+  .demo .sheet .pane.set {
+    opacity: 1 !important;
+    visibility: visible !important;
+    overflow: visible !important;
+    clip-path: none !important;
+    background: none !important;
+    border-left: 0 !important;
+    transition: none !important;
+    break-inside: avoid;
+  }
+  .demo .sheet .pane.set > * {
+    width: auto !important;
+  }
+  .demo .sheet .pane.pigment {
+    border-top: 1px solid var(--rule);
+  }
+  .set pre {
+    white-space: pre-wrap;
+    overflow: visible;
+  }
+  .chip-light,
+  .chip-dark {
+    background: none;
+    color: inherit;
+  }
 }
