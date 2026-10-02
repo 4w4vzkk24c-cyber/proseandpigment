@@ -27,24 +27,30 @@
   color-scheme: light dark;
   --paper: #F5F1E6;
   --ink: #26221B;
-  --quiet: #716C62;
+  --quiet: #6C675D;
   --rule: #DAD4C5;
-  /* Vermilion, darkened until it reads at 4.5:1 on paper. */
-  --lead: #C13F29;
+  /* Vermilion, darkened until it reads at 4.5:1 on paper. The Pigment theme's text value. */
+  --lead: #B93C27;
   --code-ground: #EDE8DA;
 
   --text: "Source Serif 4", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
   --code: "JetBrains Mono", ui-monospace, Menlo, monospace;
   --margin: clamp(1.25rem, 5vw, 3rem);
+
+  /* Shared pieces, each used in three or more places. */
+  --small: 0.9375rem;
+  --hairline: 1px solid var(--rule);
+  --focus-ring: 2px solid var(--lead);
+  --control-ease: 160ms ease-out;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --paper: #1B1916;
     --ink: #ECE7DA;
-    --quiet: #8A8377;
+    --quiet: #8F887C;
     --rule: #3A362F;
-    --lead: #D75B46;
+    --lead: #DA6653;
     --code-ground: #24211D;
   }
 }
@@ -99,7 +105,8 @@ body {
   font-size: 1.0625rem;
   text-decoration: none;
 }
-.masthead svg {
+.masthead svg,
+.masthead img {
   width: 2rem;
   height: 2rem;
   border-radius: 0.45rem;
@@ -193,10 +200,10 @@ code {
 }
 .links li {
   margin: 0;
-  border-top: 1px solid var(--rule);
+  border-top: var(--hairline);
 }
 .links li:last-child {
-  border-bottom: 1px solid var(--rule);
+  border-bottom: var(--hairline);
 }
 .links a {
   display: block;
@@ -206,8 +213,8 @@ code {
 .small-print {
   margin-top: 3.5rem;
   padding-top: 1rem;
-  border-top: 1px solid var(--rule);
-  font-size: 0.9375rem;
+  border-top: var(--hairline);
+  font-size: var(--small);
   color: var(--quiet);
 }
 .small-print a {
@@ -245,22 +252,20 @@ code {
 
 :root {
   --sheet: #FBF8F0;
-  --tok-keyword: #B93C27;
+  --tok-keyword: var(--lead);
   --tok-function: #34446E;
   --tok-string: #586F49;
   --tok-number: #82601E;
   --tok-type: #5E4034;
-  --tok-comment: #6C675D;
+  --tok-comment: var(--quiet);
 }
 @media (prefers-color-scheme: dark) {
   :root {
     --sheet: #211E1A;
-    --tok-keyword: #DA6653;
     --tok-function: #7488BD;
     --tok-string: #73915F;
     --tok-number: #BC8A2C;
     --tok-type: #AD7D6A;
-    --tok-comment: #8F887C;
   }
 }
 
@@ -290,7 +295,7 @@ code {
 .close {
   margin-top: var(--section-gap);
   padding-top: 1.75rem;
-  border-top: 1px solid var(--rule);
+  border-top: var(--hairline);
 }
 /* The one vermilion rule on the page marks its loudest statement. */
 .refusals {
@@ -351,7 +356,7 @@ code {
   }
   .set pre,
   .raw pre {
-    font-size: 0.9375rem;
+    font-size: var(--small);
   }
   .landing .row h2 {
     margin: 0;
@@ -368,17 +373,6 @@ code {
     max-width: 34rem;
   }
 }
-.demo legend,
-.demo input {
-  /* Present for keyboards and screen readers, not drawn. */
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
-}
-
 .switch {
   display: flex;
   justify-content: center;
@@ -398,7 +392,7 @@ code {
   text-align: center;
   cursor: pointer;
   touch-action: manipulation;
-  transition: background-color 160ms ease-out, color 160ms ease-out;
+  transition: background-color var(--control-ease), color var(--control-ease);
 }
 #view-raw:checked ~ .switch label[for="view-raw"],
 #view-set:checked ~ .switch label[for="view-set"] {
@@ -407,7 +401,7 @@ code {
 }
 #view-raw:focus-visible ~ .switch label[for="view-raw"],
 #view-set:focus-visible ~ .switch label[for="view-set"] {
-  outline: 2px solid var(--lead);
+  outline: var(--focus-ring);
   outline-offset: -5px;
 }
 /* On the selected option the ring sits on ink, so it takes the paper colour to stay visible. */
@@ -425,7 +419,7 @@ code {
 /* One visible line that says what the switch is for. */
 .demo-hint {
   margin: 0 0 0.6rem;
-  font-size: 0.9375rem;
+  font-size: var(--small);
   color: var(--quiet);
   text-align: center;
 }
@@ -452,7 +446,7 @@ code {
   line-height: 1.75;
   cursor: pointer;
   touch-action: manipulation;
-  transition: color 160ms ease-out;
+  transition: color var(--control-ease);
 }
 /* The tab is drawn short; its touch target reaches up into the gap above it. */
 .tabs label::before {
@@ -472,7 +466,7 @@ code {
 }
 #file-prose:focus-visible ~ .tabs label[for="file-prose"],
 #file-pigment:focus-visible ~ .tabs label[for="file-pigment"] {
-  outline: 2px solid var(--lead);
+  outline: var(--focus-ring);
   outline-offset: -6px;
 }
 
@@ -481,7 +475,7 @@ code {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   background: var(--sheet);
-  border: 1px solid var(--rule);
+  border: var(--hairline);
   border-radius: 0 0.5rem 0.5rem 0.5rem;
 }
 .pane {
@@ -570,7 +564,7 @@ code {
 }
 .sheet pre:focus-visible,
 .table-scroll:focus-visible {
-  outline: 2px solid var(--lead);
+  outline: var(--focus-ring);
   outline-offset: 3px;
   border-radius: 2px;
 }
@@ -606,7 +600,7 @@ code {
 .set td {
   text-wrap: balance;
   padding: 0.6rem 0.75rem 0.6rem 0;
-  border-bottom: 1px solid var(--rule);
+  border-bottom: var(--hairline);
 }
 .set p code,
 .set td code {
@@ -615,7 +609,7 @@ code {
 
 .demo-note {
   margin: 1.1rem 0 0;
-  font-size: 0.9375rem;
+  font-size: var(--small);
   color: var(--quiet);
 }
 
@@ -627,7 +621,7 @@ code {
 .shows li {
   margin: 0;
   padding-block: 0.7rem;
-  border-bottom: 1px solid var(--rule);
+  border-bottom: var(--hairline);
 }
 .shows li:first-child {
   padding-top: 0;
@@ -642,17 +636,6 @@ code {
 }
 
 /* What it doesn't do: the three refusals at the headline's size. */
-.refusals h2 {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
-}
 .refusal-lines {
   margin-bottom: 1.25rem;
   font-weight: 600;
@@ -716,11 +699,18 @@ pre {
   white-space: nowrap;
 }
 
-/* Read aloud, never drawn. */
-.vh {
+/* Read aloud and reachable by keyboard, never drawn: hidden labels, the demo's radio buttons
+   and legend, and the refusals' heading. */
+.vh,
+.demo legend,
+.demo input,
+.landing .refusals h2 {
   position: absolute;
   width: 1px;
   height: 1px;
+  margin: 0;
+  padding: 0;
+  border: 0;
   overflow: hidden;
   clip-path: inset(50%);
   white-space: nowrap;
@@ -813,7 +803,7 @@ pre {
     width: auto !important;
   }
   .demo .sheet .pane.pigment {
-    border-top: 1px solid var(--rule);
+    border-top: var(--hairline);
   }
   .set pre {
     white-space: pre-wrap;
