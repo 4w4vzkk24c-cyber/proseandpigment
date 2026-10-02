@@ -88,29 +88,47 @@ article {
         </div>
         <div class="pane pigment set">
           <p class="pane-label">Pigment, typeset</p>
-<pre tabindex="0" aria-label="Swift file, in colour"><code><span class="c">// Each name is set in its own pigment.</span>
-<span class="k">struct</span> <span class="t">Umber</span> {
-  <span class="k">let</span> earth = <span class="s">"green earth"</span>
-  <span class="k">let</span> sienna = <span class="n">0xBC8A2C</span>
+<pre tabindex="0" aria-label="Swift file, in colour"><code><span class="k">import</span> SwiftUI
 
-  <span class="k">func</span> <span class="f">indigo</span>(_ wash: <span class="t">Umber</span>) -&gt; <span class="t">Umber</span> {
-    <span class="c">// Keywords are vermilion.</span>
-    <span class="k">return</span> wash
+<span class="c">// A named colour in a theme.</span>
+<span class="k">struct</span> <span class="t">Pigment</span> {
+  <span class="k">let</span> name: <span class="t">String</span>
+  <span class="k">let</span> hex: <span class="t">Int</span>
+
+  <span class="k">func</span> <span class="f">color</span>() -&gt; <span class="t">Color</span> {
+    <span class="k">let</span> r = <span class="t">Double</span>(hex &gt;&gt; <span class="n">16</span> &amp; <span class="n">0xFF</span>)
+    <span class="k">let</span> g = <span class="t">Double</span>(hex &gt;&gt; <span class="n">8</span> &amp; <span class="n">0xFF</span>)
+    <span class="k">let</span> b = <span class="t">Double</span>(hex &amp; <span class="n">0xFF</span>)
+    <span class="k">return</span> <span class="t">Color</span>(
+      red: r / <span class="n">255</span>, green: g / <span class="n">255</span>,
+      blue: b / <span class="n">255</span>)
   }
-}</code></pre>
+}
+
+<span class="k">let</span> lead = <span class="t">Pigment</span>(
+  name: <span class="s">"Vermilion"</span>, hex: <span class="n">0xD2452D</span>)</code></pre>
         </div>
         <div class="pane pigment raw">
           <p class="pane-label">Pigment, raw</p>
-<pre tabindex="0" aria-label="Swift file, plain"><code>// Each name is set in its own pigment.
-struct Umber {
-  let earth = "green earth"
-  let sienna = 0xBC8A2C
+<pre tabindex="0" aria-label="Swift file, plain"><code>import SwiftUI
 
-  func indigo(_ wash: Umber) -&gt; Umber {
-    // Keywords are vermilion.
-    return wash
+// A named colour in a theme.
+struct Pigment {
+  let name: String
+  let hex: Int
+
+  func color() -&gt; Color {
+    let r = Double(hex &gt;&gt; 16 &amp; 0xFF)
+    let g = Double(hex &gt;&gt; 8 &amp; 0xFF)
+    let b = Double(hex &amp; 0xFF)
+    return Color(
+      red: r / 255, green: g / 255,
+      blue: b / 255)
   }
-}</code></pre>
+}
+
+let lead = Pigment(
+  name: "Vermilion", hex: 0xD2452D)</code></pre>
         </div>
       </div>
       <p class="demo-note">An illustration, drawn by this page. Screenshots of the app will replace it at release.</p>
