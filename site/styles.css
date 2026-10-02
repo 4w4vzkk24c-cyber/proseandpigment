@@ -145,7 +145,7 @@ li::marker {
 }
 
 .lede {
-  font-size: 1.3125rem;
+  font-size: clamp(1.1875rem, 1rem + 0.8vw, 1.3125rem);
   line-height: 1.38;
 }
 .quiet {
@@ -342,6 +342,9 @@ code {
     font-size: clamp(3rem, 4.4vw, 4rem);
     line-height: 1.04;
     margin-bottom: 2rem;
+  }
+  .landing .lede {
+    font-size: clamp(1.1875rem, 1.45vw, 1.3125rem);
   }
   .hero .demo {
     margin-top: 0;
@@ -579,6 +582,7 @@ code {
 .c { color: var(--tok-comment); font-style: italic; }
 
 .set blockquote {
+  text-wrap: balance;
   margin: 0 0 1.75rem;
   padding: 0.15rem 0 0.15rem 1.1rem;
   border-left: 3px solid var(--lead);
@@ -600,6 +604,7 @@ code {
   padding: 0.3rem 0.75rem 0.6rem 0;
 }
 .set td {
+  text-wrap: balance;
   padding: 0.6rem 0.75rem 0.6rem 0;
   border-bottom: 1px solid var(--rule);
 }
