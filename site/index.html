@@ -88,32 +88,28 @@ article {
         </div>
         <div class="pane pigment set">
           <p class="pane-label">Pigment, typeset</p>
-<pre tabindex="0" aria-label="Swift file, in colour"><code><span class="c">// Fresco: five pigments, one job each.</span>
-<span class="k">let</span> fresco: [<span class="t">String</span>: <span class="t">Int</span>] = [
-  <span class="s">"vermilion"</span>:   <span class="n">0xD2452D</span>,  <span class="c">// keywords</span>
-  <span class="s">"indigo"</span>:      <span class="n">0x34446E</span>,  <span class="c">// functions</span>
-  <span class="s">"green earth"</span>: <span class="n">0x6E8B5B</span>,  <span class="c">// strings</span>
-  <span class="s">"raw sienna"</span>:  <span class="n">0xBC8A2C</span>,  <span class="c">// numbers</span>
-  <span class="s">"burnt umber"</span>: <span class="n">0x5E4034</span>,  <span class="c">// types</span>
-]
+<pre tabindex="0" aria-label="Swift file, in colour"><code><span class="c">// Each name is set in its own pigment.</span>
+<span class="k">struct</span> <span class="t">Umber</span> {
+  <span class="k">let</span> earth = <span class="s">"green earth"</span>
+  <span class="k">let</span> sienna = <span class="n">0xBC8A2C</span>
 
-<span class="k">func</span> <span class="f">pigment</span>(_ name: <span class="t">String</span>) -&gt; <span class="t">Int</span>? {
-  fresco[name]
+  <span class="k">func</span> <span class="f">indigo</span>(_ wash: <span class="t">Umber</span>) -&gt; <span class="t">Umber</span> {
+    <span class="c">// Keywords are vermilion.</span>
+    <span class="k">return</span> wash
+  }
 }</code></pre>
         </div>
         <div class="pane pigment raw">
           <p class="pane-label">Pigment, raw</p>
-<pre tabindex="0" aria-label="Swift file, plain"><code>// Fresco: five pigments, one job each.
-let fresco: [String: Int] = [
-  "vermilion":   0xD2452D,  // keywords
-  "indigo":      0x34446E,  // functions
-  "green earth": 0x6E8B5B,  // strings
-  "raw sienna":  0xBC8A2C,  // numbers
-  "burnt umber": 0x5E4034,  // types
-]
+<pre tabindex="0" aria-label="Swift file, plain"><code>// Each name is set in its own pigment.
+struct Umber {
+  let earth = "green earth"
+  let sienna = 0xBC8A2C
 
-func pigment(_ name: String) -&gt; Int? {
-  fresco[name]
+  func indigo(_ wash: Umber) -&gt; Umber {
+    // Keywords are vermilion.
+    return wash
+  }
 }</code></pre>
         </div>
       </div>
