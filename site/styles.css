@@ -606,6 +606,10 @@ code {
 .set td code {
   color: var(--tok-function);
 }
+/* A value and its unit stay on one line. */
+.set td code {
+  white-space: nowrap;
+}
 
 .demo-note {
   margin: 1.1rem 0 0;

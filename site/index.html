@@ -39,54 +39,48 @@
       </div></div>
       <p class="demo-hint">Switch to Raw to see the file as it arrived.</p>
       <div class="tabs">
-        <label for="file-prose" translate="no">prose.md<span class="vh"> file</span></label>
+        <label for="file-prose" translate="no">report.md<span class="vh"> file</span></label>
         <label for="file-pigment" translate="no">pigment.md<span class="vh"> file</span></label>
       </div>
       <div class="sheet">
         <div class="pane prose set">
-          <p class="pane-label">Prose, typeset</p>
-          <h2>Setting body text</h2>
-          <p>Start with the <strong>measure</strong>, the length of a line. Then open the <code>line-height</code> until the lines stop touching.</p>
-<pre tabindex="0" role="region" aria-label="Code sample" translate="no"><code><span class="c">/* Narrow measure, open leading. */</span>
-<span class="t">article</span> {
-  <span class="f">max-width</span>: <span class="n">38rem</span>;
-  <span class="f">font-size</span>: <span class="n">1.125rem</span>;
-  <span class="f">line-height</span>: <span class="n">1.45</span>;
-  <span class="f">font-family</span>:
-    <span class="s">"Source Serif 4"</span>, <span class="k">serif</span>;
-}</code></pre>
-          <blockquote>Set the measure first. Everything after it is adjustment.</blockquote>
-          <div class="table-scroll" tabindex="0" role="region" aria-label="Settings table"><table>
-            <tr><th>Setting</th><th>Value</th><th>Change it when</th></tr>
-            <tr><td>Measure</td><td><code>38rem</code></td><td>the typeface runs wide</td></tr>
-            <tr><td>Size</td><td><code>1.125rem</code></td><td>the text is read at a distance</td></tr>
-            <tr><td>Leading</td><td><code>1.45</code></td><td>the lines get longer</td></tr>
+          <p class="pane-label">Report, typeset</p>
+          <h2>What I changed</h2>
+          <p>The slow step was reading the config on <strong>every request</strong>. I cache it now, in <code>load_config</code>.</p>
+<pre tabindex="0" role="region" aria-label="Code sample" translate="no"><code><span class="c"># Read once, then reuse.</span>
+<span class="f">@lru_cache</span>(maxsize=<span class="n">1</span>)
+<span class="k">def</span> <span class="f">load_config</span>(path: <span class="t">str</span>) -&gt; <span class="t">dict</span>:
+    <span class="k">with</span> <span class="f">open</span>(path) <span class="k">as</span> f:
+        <span class="k">return</span> json.<span class="f">load</span>(f)</code></pre>
+          <blockquote>The tests pass. I touched one file.</blockquote>
+          <div class="table-scroll" tabindex="0" role="region" aria-label="Results table"><table>
+            <tr><th>Check</th><th>Before</th><th>After</th></tr>
+            <tr><td>Request time</td><td><code>180 ms</code></td><td><code>12 ms</code></td></tr>
+            <tr><td>Config reads per request</td><td><code>1</code></td><td><code>0</code></td></tr>
+            <tr><td>Tests passing</td><td><code>41</code></td><td><code>41</code></td></tr>
           </table></div>
         </div>
         <div class="pane prose raw" translate="no">
-          <p class="pane-label">Prose, raw</p>
-<pre><code># Setting body text
+          <p class="pane-label">Report, raw</p>
+<pre><code># What I changed
 
-Start with the **measure**, the length of a line. Then open the `line-height` until the lines stop touching.
+The slow step was reading the config on **every request**. I cache it now, in `load_config`.
 
-```css
-/* Narrow measure, open leading. */
-article {
-  max-width: 38rem;
-  font-size: 1.125rem;
-  line-height: 1.45;
-  font-family:
-    "Source Serif 4", serif;
-}
+```python
+# Read once, then reuse.
+@lru_cache(maxsize=1)
+def load_config(path: str) -&gt; dict:
+    with open(path) as f:
+        return json.load(f)
 ```
 
-&gt; Set the measure first. Everything after it is adjustment.
+&gt; The tests pass. I touched one file.
 
-| Setting | Value | Change it when |
+| Check | Before | After |
 |---|---|---|
-| Measure | `38rem` | the typeface runs wide |
-| Size | `1.125rem` | the text is read at a distance |
-| Leading | `1.45` | the lines get longer |</code></pre>
+| Request time | `180 ms` | `12 ms` |
+| Config reads per request | `1` | `0` |
+| Tests passing | `41` | `41` |</code></pre>
         </div>
         <div class="pane pigment set">
           <p class="pane-label">Pigment, typeset</p>
@@ -152,7 +146,7 @@ let lead = Pigment(
       <li>Headings, lists, quotes, links and emphasis, set as a page instead of as symbols</li>
       <li>Code blocks in colour, in 19&nbsp;languages, including Swift, Python, JavaScript, TypeScript, Rust, Go, SQL and shell</li>
       <li>Source files too: open a <code>.py</code> or <code>.swift</code> file and read it in colour</li>
-      <li>Tables, task lists, callouts and footnotes</li>
+      <li>Tables, task lists and callouts</li>
       <li>More than 30&nbsp;themes. Pick one for light and one for dark, and the page follows your device</li>
       <li>Files from the Files app, including iCloud&nbsp;Drive</li>
     </ul>
