@@ -170,6 +170,11 @@ a:focus-visible {
   border-radius: 2px;
 }
 
+code,
+pre {
+  /* Show the characters that are in the file, not joined-up arrows. */
+  font-variant-ligatures: none;
+}
 code {
   font-family: var(--code);
   font-size: 0.86em;
@@ -232,7 +237,7 @@ code {
   }
 }
 
-/* The landing page. One document, shown typeset or raw, switched without script. */
+/* The landing page. Two files, each shown typeset or raw, switched without script. */
 
 :root {
   --sheet: #FBF8F0;
@@ -270,7 +275,7 @@ code {
 .demo {
   border: 0;
   padding: 0;
-  margin: 2.5rem 0 0;
+  margin: 1.1rem 0 0;
   min-width: 0;
 }
 .demo legend,
@@ -287,7 +292,7 @@ code {
 .switch {
   display: flex;
   justify-content: center;
-  margin-bottom: 1.25rem;
+  margin-bottom: 0.5rem;
 }
 .switch-track {
   display: inline-flex;
@@ -316,14 +321,56 @@ code {
   outline-offset: -5px;
 }
 
-/* Both versions occupy the same cell, so the page does not jump when they swap. */
+/* The two files, as tabs on the sheet's top edge. The open tab carries the vermilion rule. */
+.tabs {
+  display: flex;
+  position: relative;
+  z-index: 1;
+  margin-bottom: -1px;
+}
+.tabs label {
+  position: relative;
+  padding: 0.25rem min(1.1rem, 4vw) 0.3rem;
+  border: 1px solid transparent;
+  border-top: 3px solid transparent;
+  border-bottom: 0;
+  border-radius: 0.4rem 0.4rem 0 0;
+  color: var(--quiet);
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: color 160ms ease-out;
+}
+/* The tab is drawn short; its touch target reaches up into the gap above it. */
+.tabs label::before {
+  content: "";
+  position: absolute;
+  inset: -0.6rem 0 0;
+}
+.tabs label:hover {
+  color: var(--ink);
+}
+#file-prose:checked ~ .tabs label[for="file-prose"],
+#file-pigment:checked ~ .tabs label[for="file-pigment"] {
+  background: var(--sheet);
+  border-color: var(--rule);
+  border-top-color: var(--lead);
+  color: var(--ink);
+}
+#file-prose:focus-visible ~ .tabs label[for="file-prose"],
+#file-pigment:focus-visible ~ .tabs label[for="file-pigment"] {
+  outline: 2px solid var(--lead);
+  outline-offset: -6px;
+}
+
+/* All four views occupy the same cell, so the page does not jump when they swap. */
 .sheet {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   background: var(--sheet);
   border: 1px solid var(--rule);
-  border-top: 3px solid var(--lead);
-  border-radius: 0 0 0.5rem 0.5rem;
+  border-radius: 0 0.5rem 0.5rem 0.5rem;
 }
 .pane {
   grid-area: 1 / 1;
@@ -333,16 +380,34 @@ code {
   visibility: hidden;
   transition: opacity 180ms ease-out, visibility 0s linear 180ms;
 }
-#view-set:checked ~ .sheet .set,
-#view-raw:checked ~ .sheet .raw {
+#file-prose:checked ~ #view-set:checked ~ .sheet .prose.set,
+#file-prose:checked ~ #view-raw:checked ~ .sheet .prose.raw,
+#file-pigment:checked ~ #view-set:checked ~ .sheet .pigment.set,
+#file-pigment:checked ~ #view-raw:checked ~ .sheet .pigment.raw {
   opacity: 1;
   visibility: visible;
   transition: opacity 180ms ease-out;
 }
+/* Names each view when the stylesheet is missing and all four show at once. */
+.pane-label {
+  display: none;
+}
 @media (prefers-reduced-motion: reduce) {
   .pane,
-  .switch label {
+  .switch label,
+  .tabs label {
     transition: none !important;
+  }
+}
+/* Forced colours drop backgrounds, so the chosen option is marked with the system highlight. */
+@media (forced-colors: active) {
+  #view-raw:checked ~ .switch label[for="view-raw"],
+  #view-set:checked ~ .switch label[for="view-set"],
+  #file-prose:checked ~ .tabs label[for="file-prose"],
+  #file-pigment:checked ~ .tabs label[for="file-pigment"] {
+    forced-color-adjust: none;
+    background: Highlight;
+    color: HighlightText;
   }
 }
 
@@ -387,6 +452,22 @@ code {
   margin: 0;
   color: var(--ink);
 }
+/* A source file sits straight on the sheet. Raw and typeset keep the same lines, so only the colour changes. */
+.pigment pre {
+  margin: 0;
+  padding: 0;
+  background: none;
+  border-radius: 0;
+  white-space: pre;
+  overflow-x: auto;
+  overflow-wrap: normal;
+}
+.sheet pre:focus-visible,
+.table-scroll:focus-visible {
+  outline: 2px solid var(--lead);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
 .k { color: var(--tok-keyword); }
 .f { color: var(--tok-function); }
 .s { color: var(--tok-string); }
@@ -430,6 +511,157 @@ code {
   text-align: center;
 }
 
-.landing .status {
-  margin-top: 2.5rem;
+/* What it shows: each line is set as the thing it names. */
+.specimens {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1rem;
+}
+.specimens li {
+  margin: 0 0 0.9rem;
+}
+/* The first line is a list item whose words are each set as what they name. */
+.specimens .as-list {
+  padding-left: 1.3rem;
+  position: relative;
+}
+.specimens .as-list::before {
+  content: "";
+  position: absolute;
+  left: 0.3rem;
+  top: 0.68em;
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 50%;
+  background: var(--lead);
+}
+.specimens .w-heading {
+  font-weight: 600;
+  font-size: 1.25em;
+}
+.specimens .w-quote {
+  padding-left: 0.4em;
+  border-left: 3px solid var(--lead);
+  font-style: italic;
+}
+.specimens .w-link {
+  color: var(--lead);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.17em;
+}
+.specimens .w-em {
+  font-style: italic;
+}
+.specimens .as-code {
+  padding: 0.9rem 1rem;
+  border-radius: 0.4rem;
+  background: var(--code-ground);
+  font-family: var(--code);
+  font-size: 0.8125rem;
+  line-height: 1.65;
+  font-variant-ligatures: none;
+}
+.specimens .as-table {
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--rule);
+  font-size: 1.0625rem;
+}
+.specimens .as-table span {
+  padding: 0.4rem 0.6rem 0.4rem 0;
+}
+/* The commas and "and" stay for screen readers and for copying; the cells replace them on screen. */
+.specimens .as-table i {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+@media (max-width: 26rem) {
+  .specimens .as-table {
+    grid-template-columns: repeat(2, auto);
+  }
+  .specimens .as-table span:nth-child(-n + 2) {
+    border-bottom: 1px solid var(--rule);
+  }
+}
+/* The app's own paper and ink, whichever scheme the page is in. */
+.chip-light,
+.chip-dark {
+  padding: 0.05em 0.4em 0.1em;
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+}
+.chip-light {
+  background: #F5F1E6;
+  color: #26221B;
+}
+.chip-dark {
+  background: #1B1916;
+  color: #ECE7DA;
+}
+.in-code {
+  font-family: var(--code);
+  font-size: 0.86em;
+}
+
+/* What it doesn't do: the three refusals at the headline's size. */
+.refusals {
+  margin-top: 2.75rem;
+  padding-top: 1.1rem;
+  border-top: 2px solid var(--lead);
+}
+.refusals h2 {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.refusal-lines {
+  margin-bottom: 1.1rem;
+  font-weight: 600;
+  font-size: clamp(2.125rem, 1.2rem + 4.6vw, 3.5rem);
+  line-height: 1.08;
+}
+.refusal-lines span {
+  display: block;
+}
+
+.signature {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-top: 1.25rem;
+  font-style: italic;
+}
+.signature svg {
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 0.36rem;
+  flex: none;
+}
+
+/* The page ends on the name and where the app stands. */
+.close {
+  margin-top: 3.5rem;
+  padding-top: 1.1rem;
+  border-top: 2px solid var(--lead);
+}
+.close-name {
+  margin: 0 0 0.2rem;
+  font-weight: 600;
+  font-size: 1.75rem;
+  line-height: 1.2;
+}
+.close .status {
+  margin: 0;
 }
