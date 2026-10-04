@@ -46,12 +46,12 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --paper: #1B1916;
+    --paper: #231A11;
     --ink: #ECE7DA;
     --quiet: #8F887C;
     --rule: #3A362F;
     --lead: #DA6653;
-    --code-ground: #24211D;
+    --code-ground: #2A1F15;
   }
 }
 
